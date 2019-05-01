@@ -90,8 +90,29 @@ type FederatedTypeConfigStatus struct {
 	PropagationController ControllerStatus `json:"propagationController,omitempty"`
 	// StatusController tracks the status of the status controller.
 	// +optional
-	StatusController ControllerStatus `json:"statusController,omitempty"`
+	StatusController        ControllerStatus          `json:"statusController,omitempty"`
+	TargetTypeStatus        TargetTypeOverallStatus   `json:"targetTypeStatus,omitempty"`
+	TargetTypeClusterStatus []TargetTypeClusterStatus `json:"targetTypeClusterStatus,omitempty"`
 }
+
+type TargetTypeOverallStatus string
+
+const (
+	PresentInAllClusters    TargetTypeOverallStatus = "PresentInAllClusters"
+	NotPresentInAllClusters TargetTypeOverallStatus = "NotPresentInAllClusters"
+)
+
+type TargetTypeClusterStatus struct {
+	ClusterName string           `json:"clusterName"`
+	Status      TargetTypeStatus `json:"targetTypeStatus"`
+}
+
+type TargetTypeStatus string
+
+const (
+	TargetTypeStatusPresent    TargetTypeStatus = "Present"
+	TargetTypeStatusNotPresent TargetTypeStatus = "NotPresent"
+)
 
 // +genclient
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
