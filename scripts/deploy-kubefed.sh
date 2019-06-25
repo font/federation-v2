@@ -100,8 +100,10 @@ function helm-deploy-cmd {
 }
 
 function kubefed-admission-webhook-ready() {
-  local readyReplicas=$(kubectl -n ${1} get deployments.apps kubefed-admission-webhook -o jsonpath='{.status.readyReplicas}')
-  [[ "${readyReplicas}" -ge "1" ]]
+  if kubectl -n ${1} get deployments.apps kubefed-admission-webhook &> /dev/null; then
+    local readyReplicas=$(kubectl -n ${1} get deployments.apps kubefed-admission-webhook -o jsonpath='{.status.readyReplicas}')
+    [[ "${readyReplicas}" -ge "1" ]]
+  fi
 }
 
 NS="${KUBEFED_NAMESPACE:-kube-federation-system}"
