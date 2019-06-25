@@ -81,6 +81,9 @@ rules:
   - secrets
   verbs:
   - get
+# The comment in webhook.yaml about installing one instance also applies to the
+# conditional block below.
+{{ if (or (or (not .Values.global.scope) (eq .Values.global.scope "Cluster")) (not (.Capabilities.APIVersions.Has "core.kubefed.k8s.io/v1beta1"))) }}
 ---
 # Only need access to these core namespaced resources in the KubeFed system
 # namespace regardless of kubefed deployment scope.
@@ -103,3 +106,4 @@ rules:
   - get
   - watch
   - list
+{{ end }}

@@ -44,6 +44,9 @@ spec:
             fieldRef:
               fieldPath: metadata.namespace
       terminationGracePeriodSeconds: 10
+# The comment in webhook.yaml about installing one instance also applies to the
+# conditional block below.
+{{ if (or (or (not .Values.global.scope) (eq .Values.global.scope "Cluster")) (not (.Capabilities.APIVersions.Has "core.kubefed.k8s.io/v1beta1"))) }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -91,3 +94,4 @@ spec:
         secret:
           defaultMode: 420
           secretName: kubefed-admission-webhook-serving-cert
+{{ end }}
