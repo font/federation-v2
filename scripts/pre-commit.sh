@@ -171,8 +171,10 @@ kubectl scale deployments kubefed-controller-manager -n kube-federation-system -
 echo "Deleting cluster-scoped kubefed"
 ./scripts/delete-kubefed.sh
 
-echo "Deploying namespace-scoped kubefed"
-KUBEFED_NAMESPACE=foo NAMESPACED=y ./scripts/deploy-kubefed.sh ${CONTAINER_REGISTRY_HOST}/kubefed:e2e $(join-cluster-list)
+for ns in foo bar; do
+  echo "Deploying namespace-scoped kubefed in namespace ${ns}"
+  KUBEFED_NAMESPACE=${ns} NAMESPACED=y ./scripts/deploy-kubefed.sh ${CONTAINER_REGISTRY_HOST}/kubefed:e2e $(join-cluster-list)
+done
 
 echo "Running go e2e tests with namespace-scoped kubefed"
 run-namespaced-e2e-tests
