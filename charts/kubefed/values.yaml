@@ -37,6 +37,10 @@ controllermanager:
     SchedulerPreferences:
     CrossClusterServiceDiscovery:
     FederatedIngress:
+## Configuration values for kubefed admission webhook.
+##
+  kubeCA:
+
 
 ## Configuration global values for all charts
 ##

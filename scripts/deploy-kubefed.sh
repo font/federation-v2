@@ -31,6 +31,7 @@
 #   $ ./scripts/delete-kubefed.sh [join-cluster]... && ./scripts/deploy-kubefed.sh <image> [join-cluster]...
 #
 
+set -x
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -81,6 +82,10 @@ EOF
 
   if [[ "${IMAGE_PULL_POLICY:-}" ]]; then
     cmd="${cmd} --set controllermanager.imagePullPolicy=${IMAGE_PULL_POLICY}"
+  fi
+
+  if [[ "${KUBE_CA:-}" ]]; then
+    cmd="${cmd} --set controllermanager.kubeCA=${KUBE_CA}"
   fi
 
   ${cmd}

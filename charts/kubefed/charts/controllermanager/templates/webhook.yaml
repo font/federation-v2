@@ -20,7 +20,11 @@ webhooks:
       namespace: {{ .Release.Namespace | quote }}
       name: kubefed-admission-webhook
       path: /apis/validation.core.kubefed.k8s.io/v1beta1/federatedtypeconfigs
+{{ if .Values.kubeCA }}
+    caBundle: {{ .Values.kubeCA | quote }}
+{{ else }}
     caBundle: {{ b64enc $ca.Cert | quote }}
+{{ end }}
   rules:
   - operations:
     - CREATE
@@ -50,7 +54,11 @@ webhooks:
       namespace: {{ .Release.Namespace | quote }}
       name: kubefed-admission-webhook
       path: /apis/validation.core.kubefed.k8s.io/v1beta1/kubefedclusters
+{{ if .Values.kubeCA }}
+    caBundle: {{ .Values.kubeCA | quote }}
+{{ else }}
     caBundle: {{ b64enc $ca.Cert | quote }}
+{{ end }}
   rules:
   - operations:
     - CREATE
@@ -74,7 +82,11 @@ webhooks:
       namespace: {{ .Release.Namespace | quote }}
       name: kubefed-admission-webhook
       path: /apis/validation.core.kubefed.k8s.io/v1beta1/kubefedconfigs
+{{ if .Values.kubeCA }}
+    caBundle: {{ .Values.kubeCA | quote }}
+{{ else }}
     caBundle: {{ b64enc $ca.Cert | quote }}
+{{ end }}
   rules:
   - operations:
     - CREATE
@@ -110,7 +122,11 @@ webhooks:
       namespace: {{ .Release.Namespace | quote }}
       name: kubefed-admission-webhook
       path: /apis/mutation.core.kubefed.k8s.io/v1beta1/kubefedconfigs
+{{ if .Values.kubeCA }}
+    caBundle: {{ .Values.kubeCA | quote }}
+{{ else }}
     caBundle: {{ b64enc $ca.Cert | quote }}
+{{ end }}
   rules:
   - operations:
     - CREATE
