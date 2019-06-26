@@ -107,26 +107,4 @@ var _ = Describe("Core API Validation", func() {
 			f.Logger().Fatalf("Expected error updating invalid %s = %+v", resourceName, invalidFtc)
 		}
 	})
-
-	When("running with namespace scoped deployment", func() {
-		It(fmt.Sprintf("should succeed when an invalid %s is created outside the kubefed system namespace", resourceName), func() {
-			if !framework.TestContext.LimitedScope {
-				framework.Skipf("Cannot run validation admission webhook namespaced test in a cluster scoped deployment")
-			}
-			kubeClient := f.KubeClient(fmt.Sprintf("%s-create-namespace", testBaseName))
-			invalidFtc := validFtc.DeepCopyObject().(*v1beta1.FederatedTypeConfig)
-			namespace := framework.CreateTestNamespace(kubeClient, testBaseName)
-			framework.AddCleanupAction(func() {
-				framework.DeleteNamespace(kubeClient, namespace)
-			})
-
-			By(fmt.Sprintf("Creating an invalid %s in the separate test namespace %s", resourceName, namespace))
-			invalidFtc.Namespace = namespace
-			invalidFtc.Spec.FederatedType.Scope = "Unknown"
-			err := client.Create(context.TODO(), invalidFtc)
-			if err != nil {
-				f.Logger().Fatalf("Unexpected error creating invalid %s = %+v in another test namespace %s, err: %v", resourceName, invalidFtc, namespace, err)
-			}
-		})
-	})
 })
