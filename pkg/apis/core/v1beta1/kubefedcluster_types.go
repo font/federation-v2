@@ -26,10 +26,13 @@ import (
 // KubeFedClusterSpec defines the desired state of KubeFedCluster
 type KubeFedClusterSpec struct {
 	// The API endpoint of the member cluster. This can be a hostname,
-	// hostname:port, IP or IP:port.
+	// hostname:port, IP or IP:port. Only http and https protocol schemes are
+	// supported.
 	APIEndpoint string `json:"apiEndpoint"`
 
-	// CABundle contains the certificate authority information.
+	// CABundle contains the PEM encoded public certificate authority
+	// information used by the KubeFed controllers for constructing clients to
+	// communicate with the API server identified by APIEndpoint.
 	// +optional
 	CABundle []byte `json:"caBundle,omitempty"`
 
