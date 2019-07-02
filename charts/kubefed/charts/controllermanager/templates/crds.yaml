@@ -387,10 +387,13 @@ spec:
           properties:
             apiEndpoint:
               description: The API endpoint of the member cluster. This can be a hostname,
-                hostname:port, IP or IP:port.
+                hostname:port, IP or IP:port. Only http and https protocol schemes
+                are supported.
               type: string
             caBundle:
-              description: CABundle contains the certificate authority information.
+              description: CABundle contains the PEM encoded public certificate authority
+                information used by the KubeFed controllers for constructing clients
+                to communicate with the API server identified by APIEndpoint.
               format: byte
               type: string
             secretRef:
