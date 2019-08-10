@@ -1,5 +1,13 @@
 # Unreleased
 
+# v0.1.0-rc6
+
+# v0.1.0-rc6
+-  [#1058](https://github.com/kubernetes-sigs/kubefed/issues/1058)
+   KubeFedConfig spec.scope is now immutable.
+-  Test changelog change 1
+-  Test changelog change 2
+
 # v0.1.0-rc5
 -  [#1058](https://github.com/kubernetes-sigs/kubefed/issues/1058)
    KubeFedConfig spec.scope is now immutable.
